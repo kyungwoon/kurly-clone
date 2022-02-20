@@ -5,8 +5,8 @@ import com.clone.kurly.dto.SignupRequestDto;
 import com.clone.kurly.repository.UserRepository;
 import com.clone.kurly.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 
 @RequiredArgsConstructor
@@ -34,15 +34,15 @@ public class UserService {
         }
 
         //중복된 이메일이 존재할 경우
-        if (userRepository.existsByNickname(nickname)) {
-            throw new IllegalArgumentException("중복된 닉네임입니다.");
+        if (userRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("중복된 이메일입니다.");
         }
 
-        UserValidator.validateUserRegister(username, password, passwordCheck);
+        UserValidator.validateUserRegister(username,nickname,password,passwordCheck);
 
         // 패스워드
-        String enPassword = passwordEncoder.encode(password);
-        User user = new User(requestDto, enPassword);
+        String enPassword = passwordEncoder.encode(requestDto.getPassword());
+        User user = new User(requestDto,enPassword);
         userRepository.save(user); // DB 저장
 
     }
