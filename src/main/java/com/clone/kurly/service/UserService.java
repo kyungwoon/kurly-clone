@@ -20,6 +20,7 @@ public class UserService {
         //중복된 이메일(로그인 id)가 존재할 경우
         String username = requestDto.getUsername();
         String nickname = requestDto.getNickname();
+        String email = requestDto.getEmail();
         String password = requestDto.getPassword();
         String passwordCheck = requestDto.getPasswordCheck();
 
@@ -32,7 +33,12 @@ public class UserService {
             throw new IllegalArgumentException("중복된 닉네임입니다.");
         }
 
-        UserValidator.validateUserRegister(username, nickname, password, passwordCheck);
+        //중복된 이메일이 존재할 경우
+        if (userRepository.existsByNickname(nickname)) {
+            throw new IllegalArgumentException("중복된 닉네임입니다.");
+        }
+
+        UserValidator.validateUserRegister(username, password, passwordCheck);
 
         // 패스워드
         String enPassword = passwordEncoder.encode(password);
