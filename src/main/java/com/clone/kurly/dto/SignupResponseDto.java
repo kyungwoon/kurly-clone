@@ -7,8 +7,13 @@ import lombok.NoArgsConstructor;
 @Getter
 public class SignupResponseDto {
     boolean result;
+    private String username;
 
     public SignupResponseDto(boolean checkedresult){
         this.result = checkedresult;
+    }
+
+    public SignupResponseDto(String username) {
+        this.username = username;
     }
 }

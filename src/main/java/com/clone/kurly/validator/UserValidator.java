@@ -11,7 +11,7 @@ public class UserValidator {
 
     public static void validateUserRegister(
             String username,
-            String nickname,
+//            String nickname,
             String password,
             String passwordCheck
     ) {
