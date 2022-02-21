@@ -119,18 +119,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         List<String> skipPathList = new ArrayList<>();
 
         // 회원 관리 API 허용
-        skipPathList.add("GET,/user/**");
-        skipPathList.add("POST,/user/signup");
-        skipPathList.add("POST,/user/login");
-        skipPathList.add("GET,/image/**");
-        skipPathList.add("GET,/");
-        skipPathList.add("GET,/moims");
-        skipPathList.add("GET,/moims/**");
-        skipPathList.add("GET,/comments/**");
+        skipPathList.add("GET,/api/**");
+        skipPathList.add("POST,/api/user/signup");
+        skipPathList.add("POST,/api/user/login");
+        skipPathList.add("POST,/user/signup/username");
+        skipPathList.add("POST,/user/signup/email");
+        skipPathList.add("GET,/api/image/**");
+        skipPathList.add("GET,/api/**");
 
-        skipPathList.add("GET,/moims");
-        skipPathList.add("GET,/moims/**");
-        skipPathList.add("GET,/comments/**");
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
                 skipPathList,

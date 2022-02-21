@@ -15,7 +15,7 @@ public class UserValidator {
             String password,
             String passwordCheck
     ) {
-        String patternId = "^[a-zA-Z0-9]{6,12}$"; //아이디: 영대소문자,숫자 3-12이내
+        String patternId = "^[a-zA-Z0-9]{6,12}$"; //아이디: 영대소문자,숫자 6-12이내
 //        String patternNick = "^[a-zA-Z0-9가-힣]{3,10}$"; //닉네임: 영대소문자한글,숫자 3-10자 이내
         String patternpw= "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{4,8}$"; //비밀번호: 영대소문,숫자,특수문자 4-8이내
 
