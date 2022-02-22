@@ -42,12 +42,12 @@ public class UserOrderService {
 
         List<OrderProductDto> orderProductDtoList = new ArrayList<>();
         for (CartItem cartItem : cartItemList) {
-            price = cartItem.getProduct().getPrice; //이거되나요?
+            price = cartItem.getProduct().getOriginalPrice(); //이거되나요?
             totalPrice +=price;
 
-            Long pid = cartItem.getProduct().getPid; //이거되나요?
-            String name = cartItem.getProduct().getName; //이거되나요?
-            String shortDescription = cartItem.getProduct().getShortDescription; //이거되나요?
+            Long pid = cartItem.getProduct().getPid(); //이거되나요?
+            String name = cartItem.getProduct().getName(); //이거되나요?
+            String shortDescription = cartItem.getProduct().getShortDescription(); //이거되나요?
 
             OrderProductDto orderProductDto = new OrderProductDto(pid, price, name,shortDescription );
             orderProductDtoList.add(orderProductDto);

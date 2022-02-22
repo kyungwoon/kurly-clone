@@ -10,6 +10,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findTop8ByOrderByDiscountPercentDesc();
     List<Product> findAllByIsKurlyOnly(boolean isKurlyOnly);
     List<Product> findAllByCategoryNo(int categoryNo);
+    Product findByPid(Long pid);
 }
 
 

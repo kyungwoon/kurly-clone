@@ -43,7 +43,7 @@ public class CommentService {
     public Comment createComment(CommentRequestDto commentRequestDto){
 
         Long pid = commentRequestDto.getPid();
-        Product product = productRepository.findById(pid);
+        Product product = productRepository.findByPid(pid);
 
         Comment comment = new Comment(commentRequestDto, product);
 
@@ -59,7 +59,7 @@ public class CommentService {
 
         for (Comment comment : commentList) {
             Long uid = comment.getUid();
-            String nickname = userRepository.findById(uid).getNickname;
+            String nickname = userRepository.findById(uid).get().getNickname();
             String commentTitle  = comment.getCommentTitle();
             String comments  = comment.getComment();
 
