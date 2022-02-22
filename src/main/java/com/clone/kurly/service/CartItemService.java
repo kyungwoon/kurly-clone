@@ -39,7 +39,8 @@ public class CartItemService {
     // 카트 생성
     public Long createCart(Long uid) {
 
-        Optional<User> user = userRepository.findById(uid);
+        User user = userRepository.findById(uid).orElseThrow(
+                ()-> new NullPointerException("유저가 존재하지 않습니다."));
 
         Cart cart = new Cart (user);
         cartRepository.save(cart);
@@ -63,9 +64,9 @@ public class CartItemService {
             Long pid = cartItem.getProduct().getPid();
             Product product = productRepository.findByPid(pid);
 
-            String title = product.name;
-            Long price =product.price;
-            String img =product.image;
+            String title = product.getName();
+            Long price =product.getOriginalPrice();
+            String img =product.getDetailImageUrl();
             Long quantity =cartItem.getQuantity();
             Long cartItemId =cartItem.getCartItemId();
 
@@ -98,7 +99,7 @@ public class CartItemService {
 
         User user = userRepository.findById(uid).orElseThrow(
                 ()-> new NullPointerException("유저가 존재하지 않습니다."));
-        Product product = productRepository.findById(pid);
+        Product product = productRepository.findByPid(pid);
 
         Cart cart = cartRepository.findByUid(uid);
 
