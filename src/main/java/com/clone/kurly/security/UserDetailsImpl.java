@@ -19,6 +19,10 @@ public class UserDetailsImpl implements UserDetails {
         return user;
     }
 
+    public Long getId() {
+        return user.getId();
+    }
+
 
     public String getNickname() {
         return user.getNickname();

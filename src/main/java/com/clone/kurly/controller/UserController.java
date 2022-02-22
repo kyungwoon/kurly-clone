@@ -29,7 +29,8 @@ UserController {
     public IsloginResponseDto islogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         System.out.println("username : " + user.getUsername());
-        return new IsloginResponseDto(user.getUsername());
+        System.out.println("username : " + user.getNickname());
+        return new IsloginResponseDto(user.getUsername(),user.getNickname(),user.getId());
     }
 
     //아이디 중복 확인

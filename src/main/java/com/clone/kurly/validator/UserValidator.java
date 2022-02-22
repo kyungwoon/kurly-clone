@@ -30,10 +30,10 @@ public class UserValidator {
 //        }
 
         //비밀번호 확인
-        if (password == null || !Pattern.matches(patternpw, password)) {
-            throw new IllegalArgumentException(
-                    "비밀번호는 숫자,문자,특수문자 한 문자 이상 포함하여 4~8자 이내로 입력해주세요.");
-        }
+//        if (password == null || !Pattern.matches(patternpw, password)) {
+//            throw new IllegalArgumentException(
+//                    "비밀번호는 숫자,문자,특수문자 한 문자 이상 포함하여 4~8자 이내로 입력해주세요.");
+//        }
 
         if (!password.equals(passwordCheck)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
