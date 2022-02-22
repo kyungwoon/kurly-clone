@@ -32,9 +32,9 @@ public class UserOrderService {
 
     //주문 생성
     public void processOrder(Long cid) {
-        List<CartItem> cartItemList = cartItemRepository.findAllByCid(cid);
+        List<CartItem> cartItemList = cartItemRepository.findAllByCart_Cid(cid);
 
-        Long uid = cartRepository.findByUid(cid).getUser().getId(); //이거되나요?
+        Long uid = cartRepository.findById(cid).get().getUser().getId(); //이거되나요?
         Long price = 0L;
         Long deliveryPrice = 2000L;
         Long totalPrice = 0L;

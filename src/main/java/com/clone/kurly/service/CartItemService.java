@@ -55,9 +55,10 @@ public class CartItemService {
     // 카트 조회 (장바구니 조회)
     public List<CartItemRequestDto> showCart(Long uid) {
 
-        Cart cart = cartRepository.findByUid(uid);
+        Cart cart = cartRepository.findByUser_Id(uid);
         Long cid = cart.getCid();
-        List<CartItem>cartItemList = cartItemRepository.findAllByCid(cid);
+
+        List<CartItem>cartItemList = cartItemRepository.findAllByCart_Cid(cid);
 
         List<CartItemRequestDto> cartItemRequestDtoList = new ArrayList<>();
         for (CartItem cartItem : cartItemList) {
@@ -101,7 +102,7 @@ public class CartItemService {
                 ()-> new NullPointerException("유저가 존재하지 않습니다."));
         Product product = productRepository.findByPid(pid);
 
-        Cart cart = cartRepository.findByUid(uid);
+        Cart cart = cartRepository.findByUser_Id(uid);
 
         CartItem cartItem = new CartItem(cartItemRequestDto, user, product, cart);
 

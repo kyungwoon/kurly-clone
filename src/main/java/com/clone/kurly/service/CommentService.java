@@ -53,7 +53,7 @@ public class CommentService {
     // 댓글 조회
     public List<CommentResponseDto> showComment(Long pid) {
 
-        List<Comment> commentList = commentRepository.findAllByPid(pid);
+        List<Comment> commentList = commentRepository.findAllByProduct_Pid(pid);
 
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class CommentService {
 
             Long helpCount = 0L;
             Long commentId = comment.getCommentId();
-            List<Help> helpList =helpRepository.findAllByCommentId(commentId);
+            List<Help> helpList =helpRepository.findAllByComment_CommentId(commentId);
             for (Help help : helpList) {
                 if (help.isState()) {
                     helpCount +=1;

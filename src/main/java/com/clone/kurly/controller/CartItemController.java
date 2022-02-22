@@ -20,8 +20,8 @@ public class CartItemController {
 
     }
 
-    // 회원 가입 시 카트 생성
-    @PostMapping("/api/user/cart/${uid}")
+     //회원 가입 시 카트 생성
+    @PostMapping("/api/user/cart/{uid}")
     public Long createCart(@RequestParam Long uid) {
 
         System.out.println("유저 카트 생성  유저id : "+uid );
@@ -35,6 +35,7 @@ public class CartItemController {
     // 카트 조회 (장바구니 조회)
     @GetMapping("/api/carts")
     public List<CartItemRequestDto> showCart(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         Long uid = userDetails.getId();
         System.out.println("유저 카트 조회  유저id : "+ uid );
 
