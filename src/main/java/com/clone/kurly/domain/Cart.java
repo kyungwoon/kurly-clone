@@ -17,9 +17,9 @@ public class Cart extends Timestamped{
 
     @OneToOne
     @JoinColumn (name = "USER_ID")
-    private Optional<User> user;
+    private User user;
 
-    public Cart (Optional<User> user) {
+    public Cart (User user) {
         this.user = user;
     }
 

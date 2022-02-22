@@ -4,6 +4,7 @@ import com.clone.kurly.domain.*;
 import com.clone.kurly.dto.CartItemRequestDto;
 import com.clone.kurly.repository.CartItemRepository;
 import com.clone.kurly.repository.CartRepository;
+import com.clone.kurly.repository.ProductRepository;
 import com.clone.kurly.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

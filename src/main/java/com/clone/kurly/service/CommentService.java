@@ -4,10 +4,12 @@ package com.clone.kurly.service;
 
 import com.clone.kurly.domain.Comment;
 import com.clone.kurly.domain.Help;
+import com.clone.kurly.domain.Product;
 import com.clone.kurly.dto.CommentRequestDto;
 import com.clone.kurly.dto.CommentResponseDto;
 import com.clone.kurly.repository.CommentRepository;
 import com.clone.kurly.repository.HelpRepository;
+import com.clone.kurly.repository.ProductRepository;
 import com.clone.kurly.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -38,8 +38,16 @@ dependencies {
     implementation 'com.auth0:java-jwt:3.13.0'
 
 
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
 
+    //json parsing
+    implementation 'org.json:json:20190722'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
+
+
+
 
 tasks.named('test') {
     useJUnitPlatform()

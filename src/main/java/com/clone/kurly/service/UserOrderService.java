@@ -34,7 +34,7 @@ public class UserOrderService {
     public void processOrder(Long cid) {
         List<CartItem> cartItemList = cartItemRepository.findAllByCid(cid);
 
-        Long uid = cartRepository.findByUid(cid).getUser().getUid(); //이거되나요?
+        Long uid = cartRepository.findByUid(cid).getUser().getId(); //이거되나요?
         Long price = 0L;
         Long deliveryPrice = 2000L;
         Long totalPrice = 0L;

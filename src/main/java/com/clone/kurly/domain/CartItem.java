@@ -25,7 +25,7 @@ public class CartItem extends Timestamped{
 
     @ManyToOne
     @JoinColumn (name = "PRODUCT_ID")
-    private Product Product;
+    private Product product;
 
     @ManyToOne
     @JoinColumn (name = "CART_ID")
