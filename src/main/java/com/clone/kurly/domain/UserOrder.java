@@ -22,8 +22,15 @@ public class UserOrder extends Timestamped{
     @JoinColumn (name = "CART_ID")
     private Cart cart;
 
+    @ManyToOne
+    @JoinColumn (name = "USER_ID")
+    private User user;
 
-    public UserOrder(Cart cart){
+
+
+
+    public UserOrder(Cart cart, User user){
+        this.user = user;
         this.cart = cart;
     }
 

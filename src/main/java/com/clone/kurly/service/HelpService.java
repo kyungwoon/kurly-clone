@@ -30,8 +30,8 @@ public class HelpService {
         Comment comment = commentRepository.findByCommentId(commentId);
 
         //Help 기존에 존재하는지 확인
-        if(helpRepository.findByUidAndCommentId(uid,commentId).isPresent()) {
-            Help help = helpRepository.findByUidAndCommentId(uid,commentId).orElseThrow(
+        if(helpRepository.findByUidAndComment_CommentId(uid,commentId).isPresent()) {
+            Help help = helpRepository.findByUidAndComment_CommentId(uid,commentId).orElseThrow(
                     ()-> new NullPointerException("아이디가 존재하지 않습니다."));
             help.update(helpRequestDto);
             helpRepository.save(help);
