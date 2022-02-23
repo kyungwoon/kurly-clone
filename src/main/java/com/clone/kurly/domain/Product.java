@@ -37,7 +37,7 @@ public class Product {
     @Column
     private String weight;
 
-    @Column(length = 3000)
+    @Column
     private String contactAnt;
 
     @Column
@@ -81,6 +81,9 @@ public class Product {
 
     @Column
     private String categoryName;
+
+    @Column(columnDefinition = "integer default 0")
+    private int commentCount;
 
 
 }

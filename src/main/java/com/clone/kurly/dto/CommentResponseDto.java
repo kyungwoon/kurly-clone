@@ -12,7 +12,7 @@ import java.util.Map;
 @Setter
 @Getter
 public class CommentResponseDto {
-
+    private Long commentId;
     private Long uid;
     private String commentTitle;
     private String comment;
@@ -24,6 +24,7 @@ public class CommentResponseDto {
 
 
     public CommentResponseDto(Comment comment, String nickname, Long pid, Long helpCount, List<Map<String, Long>>helpList) {
+        this.commentId = comment.getCommentId();
         this.uid = comment.getUid();
         this.commentTitle = comment.getCommentTitle();
         this.comment = comment.getComment();

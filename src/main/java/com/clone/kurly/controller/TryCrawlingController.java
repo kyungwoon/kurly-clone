@@ -44,8 +44,9 @@ public class TryCrawlingController {
     public JSONObject TryCrawlingMarketKurly(int productNo) {
 
         //http request header의 auth token, request url, request method 담기
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjYXJ0X2lkIjoiNjgxNzE5MmUtNzBjYy00ZDU4LWJjMjYtNjJlNzM2MzczMTBiIiwiaXNfZ3Vlc3QiOnRydWUsInV1aWQiOm51bGwsIm1fbm8iOm51bGwsIm1faWQiOm51bGwsImxldmVsIjpudWxsLCJzdWIiOm51bGwsImlzcyI6Imh0dHA6Ly9ta3dlYi5hcGkua3VybHkuc2VydmljZXMvdjMvYXV0aC9ndWVzdCIsImlhdCI6MTY0NTUwNjcyMiwiZXhwIjoxNjQ1NTEwMzIyLCJuYmYiOjE2NDU1MDY3MjIsImp0aSI6Ikdnak5Od1I0RHFzMDhjS3MifQ.P_6oqOPbbp-K-rf2kmLD5YIMkIK4tTbWcp-QwJ5m_LU";
-//            String reqURL = "https://api.kurly.com/v3/home/products/4962?&ver=1645240928256";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjYXJ0X2lkIjoiZmU5ZDdjNTQtZGVmZC00ZWEzLWFlMTUtYzNkOWY5Yzg5YjA0IiwiaXNfZ3Vlc3QiOnRydWUsInV1aWQiOm51bGwsIm1fbm8iOm51bGwsIm1faWQiOm51bGwsImxldmVsIjpudWxsLCJzdWIiOm51bGwsImlzcyI6Imh0dHA6Ly9ta3dlYi5hcGkua3VybHkuc2VydmljZXMvdjMvYXV0aC9ndWVzdCIsImlhdCI6MTY0NTUyNzAxOCwiZXhwIjoxNjQ1NTMwNjE4LCJuYmYiOjE2NDU1MjcwMTgsImp0aSI6IkpzNHdBRmRUZ09yOXZiVWoifQ.H4mZ_26ipGYowsAeWVrXMrhOTdgT1ghJg8vsHpCliF0";
+
+        //String reqURL 예시 :  "https://api.kurly.com/v3/home/products/4962?&ver=1645240928256";
         String reqURL = "https://api.kurly.com/v3/home/products/" + productNo + "?&ver=1645240928256";
 
         JSONObject rawData = null;
@@ -117,11 +118,24 @@ public class TryCrawlingController {
         boolean isSales = (boolean) rawData.get("is_sales");
         String unitText = (String) rawData.get("unit_text");
         String weight = (String) rawData.get("weight");
-        String contactAnt = (String) rawData.get("contactant");
+
+
+        String rawContactAnt = (String) rawData.get("contactant");
+        String contactAnt="";
+        //data가 너무 긴 경우 오류나므로 하나만 뽑도록 하겠음
+        if (rawContactAnt.length() > 200){
+            String[] splitString = rawContactAnt.split("-");
+            //한 줄인데 너무 긴 건 그냥 없애버리겠음
+            if(splitString.length == 1){
+                contactAnt ="";
+            } else{
+                contactAnt = "-" + splitString[1];
+            }
+        } else {contactAnt = rawContactAnt;}
+
 
         JSONArray guidesArray = (JSONArray) rawData.get("guides");
-        String guides = "";
-
+        String guides;
         //data가 너무 긴 경우 오류나기 때문에 하나만 뽑도록 하겠음
         if(guidesArray.size()==0){
             guides ="";

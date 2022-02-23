@@ -48,6 +48,10 @@ public class CommentService {
         Comment comment = new Comment(commentRequestDto, product);
         commentRepository.save(comment);
 
+        int commentCount = commentRepository.countAllByProduct_Pid(pid);
+        product.setCommentCount(commentCount);
+        productRepository.save(product);
+
         return comment;
     }
 
@@ -94,7 +98,11 @@ public class CommentService {
 
     //댓글 삭제
     public void deleteComment(Long commentId) {
+        Product product = commentRepository.findById(commentId).get().getProduct();
+        int commentCount = commentRepository.countAllByProduct_Pid(product.getPid());
         commentRepository.deleteById(commentId);
+        product.setCommentCount(commentCount);
+        productRepository.save(product);
     }
 
     //댓글 수정
