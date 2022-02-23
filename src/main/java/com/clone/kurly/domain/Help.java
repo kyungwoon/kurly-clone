@@ -16,8 +16,8 @@ public class Help {
     @Id
     private Long eid;
 
-    @Column
-    private boolean state ;
+//    @Column
+//    private boolean state ;
 
     @Column
     private Long uid;
@@ -27,13 +27,12 @@ public class Help {
     private Comment comment;
 
     public Help(HelpRequestDto helpRequestDto, Comment comment) {
-        this.state = helpRequestDto.isState();
         this.uid = helpRequestDto.getUid();
         this.comment = comment;
     }
 
-    public void update (HelpRequestDto helpRequestDto) {
-        this.state =helpRequestDto.isState();
-    }
+//    public void update (HelpRequestDto helpRequestDto) {
+//        this.state =helpRequestDto.isState();
+//    }
 
 }

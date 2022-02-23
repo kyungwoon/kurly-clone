@@ -6,6 +6,7 @@ import com.clone.kurly.repository.CartItemRepository;
 import com.clone.kurly.repository.CartRepository;
 import com.clone.kurly.repository.ProductRepository;
 import com.clone.kurly.repository.UserRepository;
+import com.clone.kurly.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,26 +37,26 @@ public class CartItemService {
 
 
 
-    // 카트 생성
-    public Long createCart(Long uid) {
-
-        User user = userRepository.findById(uid).orElseThrow(
-                ()-> new NullPointerException("유저가 존재하지 않습니다."));
-
-        Cart cart = new Cart (user);
-        cartRepository.save(cart);
-        System.out.println("유저 카트 생성");
-
-        Long cid = cart.getCid();
-
-        return cid;
-
-    }
+//    // 카트 생성
+//    public Long createCart(Long uid) {
+//
+//        User user = userRepository.findById(uid).orElseThrow(
+//                ()-> new NullPointerException("유저가 존재하지 않습니다."));
+//
+//        Cart cart = new Cart (user);
+//        cartRepository.save(cart);
+//        System.out.println("유저 카트 생성");
+//
+//        Long cid = cart.getCid();
+//
+//        return cid;
+//    }
 
     // 카트 조회 (장바구니 조회)
     public List<CartItemRequestDto> showCart(Long uid) {
 
-        Cart cart = cartRepository.findByUser_Id(uid);
+        Cart cart = cartRepository.findByUser_Id(uid).orElseThrow(
+                ()-> new NullPointerException("카트가 존재하지 않습니다."));
         Long cid = cart.getCid();
 
         List<CartItem>cartItemList = cartItemRepository.findAllByCart_Cid(cid);
@@ -66,7 +67,7 @@ public class CartItemService {
             Product product = productRepository.findByPid(pid);
 
             String title = product.getName();
-            Long price =product.getOriginalPrice();
+            Long price =product.getDiscountedPrice();
             String img =product.getDetailImageUrl();
             Long quantity =cartItem.getQuantity();
             Long cartItemId =cartItem.getCartItemId();
@@ -89,9 +90,6 @@ public class CartItemService {
     }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     // 카트 아이템 생성 (장바구니 등록)
     public Long createCartItem(CartItemRequestDto cartItemRequestDto) {
 
@@ -100,9 +98,20 @@ public class CartItemService {
 
         User user = userRepository.findById(uid).orElseThrow(
                 ()-> new NullPointerException("유저가 존재하지 않습니다."));
+
+//        // 카트 없을 시 생성
+//        if(cartRepository.findByUser_Id(uid).isPresent()) {
+//
+//        } else {
+//            Cart cart = new Cart (user);
+//            cartRepository.save(cart);
+//            System.out.println("유저 카트 생성");
+//        }
+
         Product product = productRepository.findByPid(pid);
 
-        Cart cart = cartRepository.findByUser_Id(uid);
+        Cart cart = cartRepository.findByUser_Id(uid).orElseThrow(
+                ()-> new NullPointerException("카트가 존재하지 않습니다."));
 
         CartItem cartItem = new CartItem(cartItemRequestDto, user, product, cart);
 
@@ -116,17 +125,26 @@ public class CartItemService {
     }
 
     // 카트 아이템 삭제
-    public void deleteCartItem(Long cartItemId) {
-        cartRepository.deleteById(cartItemId);
+    public void deleteCartItem(Long pid, UserDetailsImpl userDetails){
+        Long uid = userDetails.getId();
+        Long cartItemId = cartItemRepository.findByUser_IdAndProduct_Pid(uid,pid).getCartItemId();
+
+        cartItemRepository.deleteById(cartItemId);
         System.out.println("카트 아이템 삭제 카트아이템 id : " + cartItemId);
     }
 
     // 카트 아이템 수량 수정
     @Transactional
-    public void updateCartItem(CartItemRequestDto cartItemRequestDto) {
+    public void updateCartItem(CartItemRequestDto cartItemRequestDto, UserDetailsImpl userDetails) {
+        Long uid = userDetails.getId();
+        Long pid = cartItemRequestDto.getPid();
+
         Long quantity = cartItemRequestDto.getQuantity();
-        CartItem cartItem = cartItemRepository.findById(cartItemRequestDto.getCartItemId()).orElseThrow(
+        Long cartItemId = cartItemRepository.findByUser_IdAndProduct_Pid(uid,pid).getCartItemId();
+
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(
                 ()-> new NullPointerException("카트 아이템이 존재하지 않습니다."));
+
         cartItem.update(quantity);
     }
 }

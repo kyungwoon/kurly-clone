@@ -125,7 +125,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("POST,/api/user/signup/username");
         skipPathList.add("POST,/api/user/signup/email");
         skipPathList.add("GET,/api/image/**");
-        skipPathList.add("GET,/api/**");
+        //skipPathList.add("GET,/api/**");
+
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(

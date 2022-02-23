@@ -20,16 +20,16 @@ public class CartItemController {
 
     }
 
-     //회원 가입 시 카트 생성
-    @PostMapping("/api/user/cart/{uid}")
-    public Long createCart(@RequestParam Long uid) {
-
-        System.out.println("유저 카트 생성  유저id : "+uid );
-
-        Long cid = cartItemService.createCart(uid);
-
-        return cid;
-    }
+//     //회원 가입 시 카트 생성
+//    @PostMapping("/api/user/cart/thisis/notuse")
+//    public Long createCart(@RequestBody Long uid) {
+//
+//        System.out.println("유저 카트 생성  유저id : "+uid );
+//
+//        Long cid = cartItemService.createCart(uid);
+//
+//        return cid;
+//    }
 
 
     // 카트 조회 (장바구니 조회)
@@ -45,14 +45,10 @@ public class CartItemController {
 
 
     // 카트 아이템 생성 (장바구니 등록)
-    @PostMapping("/api/carts/${pid}")
+    @PostMapping("/api/carts/{pid}")
     public Long createCart(@RequestBody CartItemRequestDto cartItemRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         if(userDetails ==null) {
-//            cartItemRequestDto.setUid(0L);
-//            System.out.println("상품 등록  유저id : "+cartItemRequestDto.getUid());
-//            System.out.println("상품 등록  프로덕트Id : "+cartItemRequestDto.getPid());
-//            Long cartItemId = cartItemService.createCartItem(cartItemRequestDto);
             return 0L;
 
         }else{
@@ -68,16 +64,17 @@ public class CartItemController {
     }
 
     // 카트 아이템 삭제
-    @DeleteMapping("/api/carts/{cartItemId}")
-    public Long deleteCartItem(@RequestParam Long cartItemId) {
-        cartItemService.deleteCartItem(cartItemId);
-        return cartItemId;
+    @DeleteMapping("/api/carts/{pid}")
+    public void deleteCartItem(@PathVariable Long pid, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        System.out.println("삭제진행중");
+        cartItemService.deleteCartItem(pid, userDetails);
     }
 
     //카트 아이템 수량 수정
-    @PutMapping("/api/carts/{cartItemId}")
-    public Long updateCartItem(@RequestBody CartItemRequestDto cartItemRequestDto) {
-        cartItemService.updateCartItem(cartItemRequestDto);
+    @PutMapping("/api/carts/{pid}")
+    public Long updateCartItem(@RequestBody CartItemRequestDto cartItemRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        cartItemService.updateCartItem(cartItemRequestDto,userDetails);
         return cartItemRequestDto.getCartItemId();
     }
 
