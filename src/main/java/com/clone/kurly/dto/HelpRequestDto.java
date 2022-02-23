@@ -7,6 +7,8 @@ public class HelpRequestDto {
 
     private Long commentId;
     private Long uid;
-    private boolean state;
+
+
+//    private boolean state;
 
 }

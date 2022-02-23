@@ -38,23 +38,24 @@ public class CommentController {
 
 
     //댓글 조회
-    @GetMapping("/api/comment/{productId}")
-    public List<CommentResponseDto> showComment (@RequestParam Long pid) {
-
+    @GetMapping("/api/comment/{pid}")
+    public List<CommentResponseDto> showComment (@PathVariable Long pid) {
+        System.out.println("댓글조회 진행 중");
         List<CommentResponseDto> commentList = commentService.showComment(pid);
         return commentList;
 
     }
 
     //댓글 삭제
-    @DeleteMapping("/api/comment/{commentid}")
-    public Long deleteComment (@RequestParam Long commentId) {
+    @DeleteMapping("/api/comment/{commentId}")
+    public Long deleteComment (@PathVariable Long commentId) {
+        System.out.println("댓글 삭제 진행 중");
         commentService.deleteComment(commentId);
         return commentId;
     }
 
     //댓글 수정
-    @PutMapping("/api/comment/{commentid}")
+    @PutMapping("/api/comment/{commentId}")
     public Long updateComment(@RequestBody CommentRequestDto commentRequestDto ) {
         commentService.updateComment(commentRequestDto);
         return commentRequestDto.getCommentId();

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserOrderRepository extends JpaRepository<UserOrder, Long> {
 
-    UserOrder findByUser_Id(Long uid);
+    UserOrder findByUser_Id(Long id);
 }
