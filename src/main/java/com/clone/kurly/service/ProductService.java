@@ -1,7 +1,9 @@
 package com.clone.kurly.service;
 
 import com.clone.kurly.domain.Product;
+import com.clone.kurly.dto.CommentResponseDto;
 import com.clone.kurly.dto.MainProductResponseDto;
+import com.clone.kurly.dto.ProductDetailResponseDto;
 import com.clone.kurly.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CommentService commentService;
 
     @Transactional
     public List<MainProductResponseDto> getAllProducts() {
@@ -37,10 +40,17 @@ public class ProductService {
         return productList;
     }
 
-    public Product detailProduct(Long pid) {
+    //Product product &  List<CommentResponseDto> commentResponseDtoList;
+    public ProductDetailResponseDto detailProduct(Long pid) {
         Optional<Product> productOptional = productRepository.findById(pid);
         Product product = productOptional.get();
-        return product;
+        List<CommentResponseDto> commentList = commentService.showComment(pid);
+
+        ProductDetailResponseDto productDetailResponseDto = new ProductDetailResponseDto();
+        productDetailResponseDto.setProduct(product);
+        productDetailResponseDto.setCommentResponseDtoList(commentList);
+
+        return productDetailResponseDto;
     }
 
     public List<MainProductResponseDto> getMainBannerList(){
@@ -123,8 +133,9 @@ public class ProductService {
         return productKurlyOnlyList;
     }
 
-    public List<MainProductResponseDto> getMainHomeStayList(){
-        List<Product> productList = productRepository.findAllByCategoryNo(724);
+    //셔플 있음 (홈캉스 메인 노출에 이용)
+    public List<MainProductResponseDto> getMainCategoryList(int categoryNo){
+        List<Product> productList = productRepository.findAllByCategoryNo(categoryNo);
 
         List<Integer> randomNumber = new ArrayList<>();
         for(int i = 1; i< productList.size(); i++){
@@ -157,23 +168,12 @@ public class ProductService {
         return productHomeStayList;
     }
 
-    public List<MainProductResponseDto> getMainMDDefList() {
-        List<Product> productList = productRepository.findAllByCategoryNo(907);
+    //셔플 없이 (MD 상품 노출에 이용)
+    public List<MainProductResponseDto> getMainMDList(int categoryNo) {
+        List<Product> rawProductList = productRepository.findByCategoryNoOrderByOriginalPriceDesc(categoryNo);
 
-        List<Integer> randomNumber = new ArrayList<>();
-        for(int i = 1; i< productList.size(); i++){
-            randomNumber.add(i);
-        }
-        Collections.shuffle(randomNumber);
-
-        List<Product> selectedProductList = new ArrayList<>();
-        for(int i=0; i<8; i++){
-            Product product = productList.get(randomNumber.get(i));
-            selectedProductList.add(product);
-        }
-
-        List <MainProductResponseDto> productMainMDdefList = new ArrayList<>();
-        for(Product eachProduct : selectedProductList){
+        List <MainProductResponseDto> productMainMDList = new ArrayList<>();
+        for(Product eachProduct : rawProductList){
             MainProductResponseDto product = new MainProductResponseDto();
             product.setPid(eachProduct.getPid());
             product.setMainImageUrl(eachProduct.getMainImageUrl());
@@ -186,10 +186,33 @@ public class ProductService {
             product.setCategoryNo(eachProduct.getCategoryNo());
             product.setCategoryName(eachProduct.getCategoryName());
 
-            productMainMDdefList.add(product);
+            productMainMDList.add(product);
         }
-        return productMainMDdefList;
+        return productMainMDList;
     }
+
+    public List<MainProductResponseDto> getMainReviewList() {
+        List<MainProductResponseDto> productList = new ArrayList<>();
+        List<Product> rawProductReviewData = productRepository.findTop8ByOrderByCommentCountDesc();
+        for(Product eachProduct : rawProductReviewData){
+            MainProductResponseDto product = new MainProductResponseDto();
+            product.setPid(eachProduct.getPid());
+            product.setMainImageUrl(eachProduct.getMainImageUrl());
+            product.setName(eachProduct.getName());
+            product.setShortDescription(eachProduct.getShortDescription());
+            product.setOriginalPrice(eachProduct.getOriginalPrice());
+            product.setDiscountedPrice(eachProduct.getDiscountedPrice());
+            product.setDiscountPercent(eachProduct.getDiscountPercent());
+            product.setKurlyOnly(eachProduct.isKurlyOnly());
+            product.setCategoryNo(eachProduct.getCategoryNo());
+            product.setCategoryName(eachProduct.getCategoryName());
+
+            productList.add(product);
+        }
+        return productList;
+
+    }
+
 
 
 }
