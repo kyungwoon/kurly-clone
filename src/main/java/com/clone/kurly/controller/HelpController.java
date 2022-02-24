@@ -21,10 +21,10 @@ public class HelpController {
 
     // 도움되었다 선택함
     @PostMapping("/api/comment/help")
-    public Long commentHelp (@RequestBody HelpRequestDto helpRequestDto) {
+    public String commentHelp (@RequestBody HelpRequestDto helpRequestDto) {
+        System.out.println("댓글 선택 진행 중");
+        String result = helpService.commentHelp(helpRequestDto);
 
-        Long eid = helpService.commentHelp(helpRequestDto);
-
-        return eid;
+        return result;
     }
 }

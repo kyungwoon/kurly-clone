@@ -46,19 +46,19 @@ public class CartItemController {
 
     // 카트 아이템 생성 (장바구니 등록)
     @PostMapping("/api/carts/{pid}")
-    public Long createCart(@RequestBody CartItemRequestDto cartItemRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public List<CartItemRequestDto> createCart(@RequestBody CartItemRequestDto cartItemRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         if(userDetails ==null) {
-            return 0L;
+            return null;
 
         }else{
             Long uid = userDetails.getId();
             cartItemRequestDto.setUid(uid);
             System.out.println("상품 등록  유저id : "+cartItemRequestDto.getUid());
             System.out.println("상품 등록  프로덕트Id : "+cartItemRequestDto.getPid());
-            Long cartItemId = cartItemService.createCartItem(cartItemRequestDto);
-            return cartItemId;
+            List<CartItemRequestDto> cartItemRequestDtoList = cartItemService.createCartItem(cartItemRequestDto);
 
+            return cartItemRequestDtoList;
         }
 
     }

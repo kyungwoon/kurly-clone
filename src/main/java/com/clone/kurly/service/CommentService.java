@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -59,7 +58,7 @@ public class CommentService {
     public List<CommentResponseDto> showComment(Long pid) {
 
         List<Comment> commentList = commentRepository.findAllByProduct_Pid(pid);
-
+        String productName = productRepository.findByPid(pid).getName();
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
         for (Comment comment : commentList) {
@@ -88,7 +87,7 @@ public class CommentService {
                 //helpList.add(help.getUid());
             }
 
-            CommentResponseDto commentResponseDto = new CommentResponseDto(comment, nickname, pid, helpCount, helpList);
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment, nickname, pid,productName, helpCount, helpList);
             commentResponseDtoList.add(commentResponseDto);
         }
 
@@ -97,10 +96,24 @@ public class CommentService {
     }
 
     //댓글 삭제
+    @Transactional
     public void deleteComment(Long commentId) {
-        Product product = commentRepository.findById(commentId).get().getProduct();
-        int commentCount = commentRepository.countAllByProduct_Pid(product.getPid());
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                ()-> new NullPointerException("유저가 존재하지 않습니다.")
+        );
+
+        Product product = comment.getProduct();
+
+        //댓글 안에 도움됬어요 전부 삭제
+        helpRepository.deleteAllByComment_CommentId(commentId);
+        System.out.println("댓글 도움됬어요 전부 삭제 선진행 완료");
+
+        //댓글 삭제
         commentRepository.deleteById(commentId);
+        System.out.println("댓글 삭제 완료 commentId: " + commentId);
+
+
+        int commentCount = commentRepository.countAllByProduct_Pid(product.getPid());
         product.setCommentCount(commentCount);
         productRepository.save(product);
     }
