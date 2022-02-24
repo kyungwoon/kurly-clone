@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.regex.Pattern;
 
 @Component
-@RequiredArgsConstructor
 public class UserValidator {
 
     public static void validateUserRegister(
