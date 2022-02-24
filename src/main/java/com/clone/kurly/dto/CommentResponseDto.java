@@ -19,11 +19,12 @@ public class CommentResponseDto {
     private LocalDateTime createdAt;
     private String nickname;
     private Long pid;
+    private String productName;
     private Long helpCount;
     private List<Map<String, Long>>helpList;
 
 
-    public CommentResponseDto(Comment comment, String nickname, Long pid, Long helpCount, List<Map<String, Long>>helpList) {
+    public CommentResponseDto(Comment comment, String nickname, Long pid,String productName, Long helpCount, List<Map<String, Long>>helpList) {
         this.commentId = comment.getCommentId();
         this.uid = comment.getUid();
         this.commentTitle = comment.getCommentTitle();
@@ -31,6 +32,7 @@ public class CommentResponseDto {
         this.createdAt = comment.getCreatedAt();
         this.nickname = nickname;
         this.pid = pid;
+        this.productName = productName;
         this.helpCount = helpCount;
         this.helpList= helpList;
     }
