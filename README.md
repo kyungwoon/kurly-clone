@@ -1,14 +1,13 @@
 # kurly-clone
 
+![스크린샷 2022-04-19 오후 10 49 21](https://user-images.githubusercontent.com/94433709/164018605-a1b8fee1-881c-4e2e-9ed6-c8678594e315.png)
+![스크린샷 2022-04-19 오후 10 50 13](https://user-images.githubusercontent.com/94433709/164018787-f469bfcf-0396-4f21-bc9d-c13564b285fc.png)
+![스크린샷 2022-04-19 오후 10 50 41](https://user-images.githubusercontent.com/94433709/164018888-b95c2b8a-27d2-48de-b37f-b8d4933e8ede.png)
+![스크린샷 2022-04-19 오후 10 51 05](https://user-images.githubusercontent.com/94433709/164018966-823f48c1-0e30-40d3-8e3a-63fc04a57f56.png)
 
 
 
 
-![image](https://user-images.githubusercontent.com/74662752/155528384-3e3c2ff9-1e4d-4c0d-9479-7a47b932abe8.png)
-![image](https://user-images.githubusercontent.com/74662752/155528090-ea3cd3c4-e3f1-46a2-bbea-c25036820b9b.png)
-![image](https://user-images.githubusercontent.com/74662752/155528142-059f4645-7e93-470b-9434-d5b3b69c43f4.png)
-![image](https://user-images.githubusercontent.com/74662752/155528192-b503aa56-0ea7-4b65-be95-3bb4ca84f6fd.png)
-![image](https://user-images.githubusercontent.com/74662752/155528228-1026a20a-46da-48a2-9f56-0128b27eb91a.png)
-![image](https://user-images.githubusercontent.com/74662752/155528272-6f87d80e-f6f9-4ed8-8987-aa6b98aee06a.png)
+
 
 
